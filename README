@@ -1,0 +1,32 @@
+$Id: README 358 2005-05-04 12:46:02Z paul $
+
+This is OCaml "Sem" library. It is intended to be a first (AFAIK) try to
+implement POSIX semaphores in OCaml.
+
+Further documentation on library installation and usage you may find in
+INSTALL and sem.mli files.
+
+The library was made following the pattern of POSIX semaphore infrastructure
+of FreeBSD.
+
+Since it's an early, alpha you are welcome to change it or suggest new ideas
+in order to make it useable on any platform of your fantasy ;).
+
+DONE:
+- alpha building and testing on FreeBSD-5 platform.
+
+TODO:
+- port of C part to other platforms (if needed);
+- automake/autoconf support (contributors are welcome);
+- higher order functions implementing an easy-to-use high level interface to
+  the library;
+- OO implementation for the fans ;)
+
+BUGS:
+- all sem* calls using a handle of a closed semaphore (after sem_close) lead
+  to a core dump (signals either 6 or 11) as tested on FreeBSD-5. This issue
+  has its roots somewhere deeply inside libc or kernel, I dunno as for now.
+
+NOTES:
+- you have to enable POSIX semaphores in your OS kernel in order to use the
+  functions described under "Named semaphores operation" in sem.mli file.

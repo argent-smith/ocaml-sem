@@ -1,0 +1,154 @@
+{4 Table of contents}
+
+- {{:#gpi} General project information}
+- {{:#pd} Project description}
+- {{:#readme} Readme notice}
+- {{:#get} Getting the source}
+- {{:#install} Installing}
+- {{:#lic} License}
+- {{:#links} Links}
+- {{:#ocamldoc} Further OCamlDoc documentation}
+
+{2:gpi General project information}
+
+- {b Author:} Paul Argentoff, AKA {e argent_smith}, argentoff at gmail.com.
+- {b Version:} 0.0.2
+- {b Status:} alpha, testers wanted.
+
+{2:pd Project description}
+ 
+Sem is an {{:http://www.ocaml.org}OCaml} module implementing support of {{:http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/HTML/APS33DTE_html/DOCU_010.HTM}POSIX semaphores}. The package contains code in C and {{:http://www.ocaml.org}OCaml}
+programming languages. Once compiled it makes a usual {{:http://www.ocaml.org}OCaml} 
+library usable in both byte-code and native code development. 
+
+The initial goal of {e "ocaml-sem"} project was to make a library
+which could be used by an {{:http://www.ocaml.org}OCaml} programmer to operate with OS's
+{{:http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/HTML/APS33DTE_html/DOCU_010.HTM}POSIX semaphores}. Since Google returned no result, I've decided to
+write my own code implementing a features the task could require.
+ 
+The library implements an interface between {{:http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/HTML/APS33DTE_html/DOCU_010.HTM}OS POSIX semaphore 
+API} and {{:http://www.ocaml.org}OCaml}-based application. The library is well self-documented
+since it builds the set of HTML documentation in traditional
+{{:http://www.ocaml.org}OCaml} ocamldoc style. 
+ 
+Using this library a programmer can easily construct code creating,
+accessing and destroying {{:http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/HTML/APS33DTE_html/DOCU_010.HTM}POSIX semaphores}. The set of semaphore 
+operations contain all basic functions I've found in FreeBSD
+"sem" API:
+ - {{:http://www.FreeBSD.org/cgi/man.cgi?query=sem_destroy&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html}sem_destroy(3)}, 
+ - {{:http://www.FreeBSD.org/cgi/man.cgi?query=sem_getvalue&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html}sem_getvalue(3)}, 
+ - {{:http://www.FreeBSD.org/cgi/man.cgi?query=sem_init&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html}sem_init(3)}, 
+ - {{:http://www.FreeBSD.org/cgi/man.cgi?query=sem_open&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html}sem_open(3)}, 
+ - {{:http://www.FreeBSD.org/cgi/man.cgi?query=sem_close&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html}sem_close(3)}, 
+ - {{:http://www.FreeBSD.org/cgi/man.cgi?query=sem_post&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html}sem_post(3)}, 
+ - {{:http://www.FreeBSD.org/cgi/man.cgi?query=sem_wait&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html}sem_wait(3)}, 
+ - {{:http://www.FreeBSD.org/cgi/man.cgi?query=sem_trywait&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html}sem_trywait(3)}. 
+ 
+The library is to be distributed as an open-source under the
+terms of {{:#lic} BSD license} which would allow the library to be freely used
+and/or co-developed by anyone. 
+ 
+More documentation on the library's interface and implementation
+can be found in the code which is well commented and documented 
+according to basic {{:http://www.ocaml.org}OCaml} documentation tradition.
+
+{2:readme README notice}
+
+This is {{:http://www.ocaml.org}OCaml} "{!module: Sem}" library. It is intended to be a first (AFAIK) try to
+implement {{:http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/HTML/APS33DTE_html/DOCU_010.HTM}POSIX semaphores} in {{:http://www.ocaml.org}OCaml}.
+
+Further documentation on library installation and usage you may find in
+{{:#install}INSTALL} and {{:Sem.html}sem.mli} files.
+
+The library was made following the pattern of {{:http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/HTML/APS33DTE_html/DOCU_010.HTM}POSIX semaphore infrastructure}
+of FreeBSD.
+
+Since it's an early alpha you are welcome to change it or suggest new ideas
+in order to make it usable on any platform of your fantasy ;).
+
+{b DONE:}
+  - alpha building and testing on FreeBSD-5 platform.
+
+{b TODO:}
+- port of C part to other platforms (if needed);
+- automake/autoconf support (contributors are welcome);
+- higher order functions implementing an easy-to-use high level interface to
+  the library;
+- OO implementation for the fans ;)
+
+{b BUGS:}
+- all [sem*] calls using a handle of a closed semaphore (after {!val: Sem.sem_close}) lead
+  to a core dump (signals either 6 or 11) as tested on FreeBSD-5. This issue
+  has its roots somewhere deeply inside libc or kernel, I dunno as for now.
+
+{b NOTES:}
+- you have to enable {{:http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/HTML/APS33DTE_html/DOCU_010.HTM}POSIX semaphores} in your OS kernel in order to use the
+  functions described under {{:Sem.html#2_Namedsemaphoreoperation}"Named semaphore operation" in sem.mli file}.
+
+{2:get Getting the source}
+
+- {b FTP:} Latest source code is available at {{:ftp://ftp.rtelekom.ru/pub/FreeBSD/ports/distfiles/sem-0.0.2.tar.bz2}my FTP site};
+- {b SourceForge:} {{:http://sourceforge.net/projects/ocaml-sem/}OCaml-Sem project page}.
+
+{2:install Installing}
+
+To build this package you should have:
+- installed OCaml distribution (tested with 3.08) with Unix library;
+- findlib (tested with 1.0.3).
+
+Then, issue the following commands:
+{v
+$ make all
+$ make install
+v}
+
+Additionally, you may {v make docs v}.
+
+
+{2:lic License}
+
+{8 BSD License}
+
+Copyright (c) 2005, Paul Argentoff <argentoff at gmail.com>
+All rights reserved.
+ 	
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+- Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the
+  distribution.
+- Neither the name of the "Ratmir-TeleKom, Ltd." nor the names of its
+  contributors may
+  be used to endorse or promote products derived from this software
+  without specific prior written permission.
+ 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+{8 OCamlMakefile notice}
+
+OCamlMakefile is a part of ocaml-make package by Markus Mottl; it is made
+under GNU LGPL and can be freely found at {{:http://www.oefai.at/~markus}http://www.oefai.at/~markus}
+
+{2:links Links}
+
+- {{:http://sourceforge.net/projects/ocaml-sem/}SourceForge project information page};
+- {{:http://www.freshports.org/devel/ocaml-sem/}FreeBSD port information}.
+
+{2:ocamldoc Further OCamlDoc documentation}
+
+{!indexlist}

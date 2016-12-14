@@ -1,0 +1,12 @@
+$Id: INSTALL 358 2005-05-04 12:46:02Z paul $
+
+To build this package you should have:
+- instaled OCaml distribution (tested with 3.08) with Unix library;
+- findlib (tested with 1.0.3).
+
+Then, issue the following commands:
+
+make all
+make install
+
+Additionally, you may make doc (make htdoc for html docs only).
