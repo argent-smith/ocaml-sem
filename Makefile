@@ -11,7 +11,7 @@ OCAMLMAKEFILE=OCamlMakefile
 SOURCES	= sem_stubs.c \
 	  sem.mli \
 	  sem.ml
-	 	 
+
 RESULT= sem
 
 PACKS= unix

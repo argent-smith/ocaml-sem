@@ -18,7 +18,7 @@ type t
   [name].  The returned semaphore may be used in subsequent calls to
   [sem_getvalue], [sem_wait], [sem_trywait], [sem_post], and
   [sem_close]. [oflags] must be either [Unix.O_CREAT], [Unix.O_EXCL] or both.
-  
+
   Default values:
   - [oflags = \[\]]
   - [mode = 0o600]
@@ -56,16 +56,16 @@ val sem_getvalue : t -> int
 (** {2 Unnamed semaphore operation} *)
 
 (** {b {i Note:}} the following two functions do semaphore creation/destruction
-  only; all other operations (except [sem_open]) are common to named semaphores 
+  only; all other operations (except [sem_open]) are common to named semaphores
   and should be done by the functions documented above. *)
 
-(** [sem_init semop pshared ival] initializes the unnamed semaphore. If 
-  [semop = None], returns the newly created semaphore, else re-initializes 
+(** [sem_init semop pshared ival] initializes the unnamed semaphore. If
+  [semop = None], returns the newly created semaphore, else re-initializes
   the existing one and returns it.
-  The semaphore will have the value [ival].  A non-zero value for 
-  [pshared] specifies a shared semaphore that can be used by multiple 
+  The semaphore will have the value [ival].  A non-zero value for
+  [pshared] specifies a shared semaphore that can be used by multiple
   processes, which this implementation is not capable of.
-  
+
   Following a successful call to [sem_init], [sem] can be used as an argument
   in subsequent calls to [sem_wait], [sem_trywait], [sem_post], and
   [sem_destroy].  The sem argument is no longer valid after a successful
