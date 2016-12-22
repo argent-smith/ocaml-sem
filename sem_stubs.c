@@ -34,8 +34,8 @@
 #endif
 
 static int open_flag_table[] = {
-  O_RDONLY, O_WRONLY, O_RDWR, O_NONBLOCK, O_APPEND, O_CREAT, O_TRUNC, O_EXCL,
-  O_NOCTTY, O_DSYNC, O_SYNC, O_RSYNC
+    O_RDONLY, O_WRONLY, O_RDWR, O_NONBLOCK, O_APPEND, O_CREAT, O_TRUNC, O_EXCL,
+    O_NOCTTY, O_DSYNC, O_SYNC, O_RSYNC
 };
 
 extern void uerror (char * cmdname, value cmdarg);
@@ -47,139 +47,139 @@ extern void uerror (char * cmdname, value cmdarg);
 
 
 value stub_sem_open(value name,
-          value oflags,
-          value perm,
-          value init) {
+                    value oflags,
+                    value perm,
+                    value init) {
 
-  int cv_oflags;
-  char * cv_name;
-  sem_t * sem;
+    int cv_oflags;
+    char * cv_name;
+    sem_t * sem;
 
-  CAMLparam4 (name, oflags, perm, init);
+    CAMLparam4 (name, oflags, perm, init);
 
-  cv_oflags = convert_flag_list(oflags, open_flag_table);
-  cv_name = stat_alloc(string_length(name) + 1);
-  strcpy(cv_name, String_val(name));
-  enter_blocking_section();
-  sem = sem_open(cv_name, cv_oflags, Int_val(perm), Int_val(init));
-  leave_blocking_section();
-  stat_free(cv_name);
-  if (sem == SEM_FAILED) {
-    uerror("sem_open", name);
-  };
+    cv_oflags = convert_flag_list(oflags, open_flag_table);
+    cv_name = stat_alloc(string_length(name) + 1);
+    strcpy(cv_name, String_val(name));
+    enter_blocking_section();
+    sem = sem_open(cv_name, cv_oflags, Int_val(perm), Int_val(init));
+    leave_blocking_section();
+    stat_free(cv_name);
+    if (sem == SEM_FAILED) {
+        uerror("sem_open", name);
+    };
 
-  CAMLreturn ((value) sem);
+    CAMLreturn ((value) sem);
 };
 
 value stub_sem_close(value sem) {
-  CAMLparam1(sem);
-  CAMLlocal1(estr);
+    CAMLparam1(sem);
+    CAMLlocal1(estr);
 
-  estr = copy_string("");
+    estr = copy_string("");
 
-  if (sem_close((sem_t *) sem) == -1) {
-    uerror("sem_close", estr);
-  };
+    if (sem_close((sem_t *) sem) == -1) {
+        uerror("sem_close", estr);
+    };
 
-  CAMLreturn(Val_unit);
+    CAMLreturn(Val_unit);
 };
 
 value stub_sem_unlink(value name) {
-  CAMLparam1(name);
+    CAMLparam1(name);
 
-  char * cv_name = stat_alloc(string_length(name) + 1);
-  strcpy(cv_name, String_val(name));
-  if (sem_unlink(cv_name) == -1) {
-    uerror("sem_unlink", name);
-  };
-  stat_free(cv_name);
+    char * cv_name = stat_alloc(string_length(name) + 1);
+    strcpy(cv_name, String_val(name));
+    if (sem_unlink(cv_name) == -1) {
+        uerror("sem_unlink", name);
+    };
+    stat_free(cv_name);
 
-  CAMLreturn(Val_unit);
+    CAMLreturn(Val_unit);
 };
 
 value stub_sem_post(value sem) {
-  CAMLparam1(sem);
-  CAMLlocal1(estr);
+    CAMLparam1(sem);
+    CAMLlocal1(estr);
 
-  estr = copy_string("");
+    estr = copy_string("");
 
-  if (sem_post((sem_t *) sem) == -1) {
-    uerror("sem_post", estr);
-  };
+    if (sem_post((sem_t *) sem) == -1) {
+        uerror("sem_post", estr);
+    };
 
-  CAMLreturn(Val_unit);
+    CAMLreturn(Val_unit);
 };
 
 value stub_sem_wait(value sem) {
-  CAMLparam1(sem);
-  CAMLlocal1(estr);
+    CAMLparam1(sem);
+    CAMLlocal1(estr);
 
-  estr = copy_string("");
+    estr = copy_string("");
 
-  if (sem_wait((sem_t *) sem) == -1) {
-    uerror("sem_wait", estr);
-  };
+    if (sem_wait((sem_t *) sem) == -1) {
+        uerror("sem_wait", estr);
+    };
 
-  CAMLreturn(Val_unit);
+    CAMLreturn(Val_unit);
 };
 
 value stub_sem_trywait(value sem) {
-  CAMLparam1(sem);
-  CAMLlocal1(estr);
+    CAMLparam1(sem);
+    CAMLlocal1(estr);
 
-  estr = copy_string("");
+    estr = copy_string("");
 
-  if (sem_trywait((sem_t *) sem) == -1) {
-    uerror("sem_trywait", estr);
-  };
+    if (sem_trywait((sem_t *) sem) == -1) {
+        uerror("sem_trywait", estr);
+    };
 
-  CAMLreturn(Val_unit);
+    CAMLreturn(Val_unit);
 };
 
 value stub_sem_getvalue(value sem) {
-  int * vp;
+    int * vp;
 
-  CAMLparam1(sem);
-  CAMLlocal2(estr, v);
+    CAMLparam1(sem);
+    CAMLlocal2(estr, v);
 
-  estr = copy_string("");
+    estr = copy_string("");
 
-  vp = calloc(1, sizeof(int));
-  if (sem_getvalue((sem_t *)sem,vp) == -1) {
-    uerror("sem_getvalue", estr);
-  };
-  v = Val_int(*vp);
-  free(vp);
+    vp = calloc(1, sizeof(int));
+    if (sem_getvalue((sem_t *)sem,vp) == -1) {
+        uerror("sem_getvalue", estr);
+    };
+    v = Val_int(*vp);
+    free(vp);
 
-  CAMLreturn(v);
+    CAMLreturn(v);
 };
 
 value stub_sem_init(value semop, value pshared, value ival) {
-  sem_t * sem;
-  CAMLparam3(semop, pshared, ival);
-  CAMLlocal1(estr);
+    sem_t * sem;
+    CAMLparam3(semop, pshared, ival);
+    CAMLlocal1(estr);
 
-  estr = copy_string("");
+    estr = copy_string("");
 
-  if (semop != NONE) {
-    sem = (sem_t *) Field(semop, SOME);
-  };
-  if (sem_init(sem, Int_val(pshared), Int_val(ival)) == -1) {
-    uerror("sem_init", estr);
-  };
+    if (semop != NONE) {
+        sem = (sem_t *) Field(semop, SOME);
+    };
+    if (sem_init(sem, Int_val(pshared), Int_val(ival)) == -1) {
+        uerror("sem_init", estr);
+    };
 
-  CAMLreturn((value) sem);
+    CAMLreturn((value) sem);
 };
 
 value stub_sem_destroy(value sem) {
-  CAMLparam1(sem);
-  CAMLlocal1(estr);
+    CAMLparam1(sem);
+    CAMLlocal1(estr);
 
-  estr = copy_string("");
+    estr = copy_string("");
 
-  if (sem_destroy((sem_t *) sem) == -1) {
-    uerror("sem_destroy", estr);
-  };
+    if (sem_destroy((sem_t *) sem) == -1) {
+        uerror("sem_destroy", estr);
+    };
 
-  CAMLreturn(Val_unit);
+    CAMLreturn(Val_unit);
 };
